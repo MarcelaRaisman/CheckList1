@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Are You Ready to Scale, or About to Break?</title>
+  <style>
+    :root {
+      --page: #f3f0ea;
+      --paper: #fcfbf8;
+      --ink: #171717;
+      --muted: #5f5a53;
+      --line: #d9d1c7;
+      --line-strong: #b7ab9d;
+      --accent: #b14f2b;
+      --accent-soft: #f1e3da;
+      --max-width: 980px;
+      --radius: 22px;
+      --shadow: 0 10px 30px rgba(30, 24, 16, 0.05);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--ink);
+      font-family: "Segoe UI", "Arial", sans-serif;
+      line-height: 1.8;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    code {
+      font-family: "Consolas", "Courier New", monospace;
+    }
+
+    .page {
+      width: min(calc(100% - 28px), var(--max-width));
+      margin: 20px auto 48px;
+    }
+
+    .sheet {
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero {
+      position: relative;
+      padding: 42px 40px 34px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .brand-mark {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 96px;
+      max-width: 18vw;
+      opacity: 0.92;
+    }
+
+    .brand-mark img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+
+    .kicker {
+      display: inline-block;
+      margin-bottom: 18px;
+      padding: 6px 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      font-size: 0.94rem;
+      font-weight: 700;
+      background: #fff;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(260px, 0.9fr);
+      gap: 34px;
+      align-items: start;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.4rem, 4.2vw, 4.4rem);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      max-width: 16ch;
+    }
+
+    .subhead {
+      margin: 16px 0 0;
+      max-width: 34ch;
+      font-size: clamp(1.18rem, 1.8vw, 1.5rem);
+      color: var(--muted);
+      line-height: 1.55;
+    }
+
+    .source-line {
+      margin: 22px 0 0;
+      font-size: 1.06rem;
+      color: var(--muted);
+      line-height: 1.7;
+      max-width: 58ch;
+    }
+
+    .lead {
+      margin: 28px 0 0;
+      max-width: 60ch;
+      font-size: 1.16rem;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 28px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-size: 1rem;
+      font-weight: 800;
+      transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .button-primary {
+      background: var(--ink);
+      color: #fff;
+      border: 1px solid var(--ink);
+    }
+
+    .button-secondary {
+      background: transparent;
+      color: var(--ink);
+      border: 1px solid var(--line-strong);
+    }
+
+    .author-panel {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #fff;
+    }
+
+    .portrait {
+      aspect-ratio: 4 / 5;
+      border-radius: 18px;
+      border: 1px solid var(--line);
+      background: #f6f2eb;
+      overflow: hidden;
+    }
+
+    .portrait img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+    }
+
+    .author-panel h2 {
+      margin: 16px 0 8px;
+      font-size: 1.45rem;
+      line-height: 1.35;
+    }
+
+    .author-panel p {
+      margin: 0 0 12px;
+      color: var(--muted);
+      font-size: 1rem;
+    }
+
+    .author-panel p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .author-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .author-tags span {
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.88rem;
+      font-weight: 800;
+    }
+
+    .content {
+      padding: 0 40px 40px;
+    }
+
+    .intro {
+      padding: 26px 0 28px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .intro p {
+      margin: 0;
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 70ch;
+    }
+
+    .intro .button,
+    .summary .button,
+    .callout .button {
+      margin-top: 18px;
+    }
+
+    .chapter {
+      padding: 34px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .chapter:last-of-type {
+      border-bottom: 0;
+    }
+
+    .chapter-label {
+      display: block;
+      margin-bottom: 10px;
+      color: var(--accent);
+      font-size: 0.92rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .chapter h3 {
+      margin: 0 0 16px;
+      font-size: clamp(1.7rem, 2.5vw, 2.25rem);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      max-width: 24ch;
+    }
+
+    .chapter p {
+      margin: 0;
+      font-size: 1.12rem;
+      max-width: 72ch;
+    }
+
+    .list {
+      margin-top: 18px;
+      padding-left: 20px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .list li {
+      padding: 14px 16px;
+      border-left: 3px solid var(--accent);
+      background: #fff;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      font-size: 1.04rem;
+      list-style-position: inside;
+    }
+
+    .table-wrap {
+      margin-top: 20px;
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 720px;
+    }
+
+    th,
+    td {
+      padding: 16px 14px;
+      text-align: left;
+      vertical-align: top;
+      border-bottom: 1px solid var(--line);
+    }
+
+    th {
+      background: #f8f4ee;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+    }
+
+    td:first-child {
+      width: 46%;
+      font-weight: 600;
+    }
+
+    td.score {
+      width: 7%;
+      text-align: center;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .score-option {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 36px;
+      cursor: pointer;
+    }
+
+    .score-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .score-dot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border: 2px solid var(--line-strong);
+      border-radius: 999px;
+      background: #fff;
+      transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    }
+
+    .score-option input:checked + .score-dot {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+      transform: scale(1.06);
+    }
+
+    .score-option input:checked + .score-dot::after {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--accent);
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .callout {
+      margin: 34px 0;
+      padding: 24px;
+      border-radius: 22px;
+      background: #fff;
+      border: 1px solid var(--line-strong);
+    }
+
+    .callout h3 {
+      margin: 0 0 10px;
+      font-size: 1.7rem;
+      line-height: 1.3;
+      max-width: 24ch;
+    }
+
+    .callout p {
+      margin: 0;
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 72ch;
+    }
+
+    .score-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 20px;
+    }
+
+    .box {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #fff;
+    }
+
+    .box h4 {
+      margin: 0 0 10px;
+      font-size: 1.22rem;
+    }
+
+    .box p {
+      margin: 0;
+      font-size: 1.04rem;
+      color: var(--muted);
+    }
+
+    .timeline {
+      margin-top: 18px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 16px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .timeline-item span {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.96rem;
+      font-weight: 800;
+    }
+
+    .timeline-item p {
+      margin: 0;
+      font-size: 1.04rem;
+    }
+
+    .results-panel {
+      margin-top: 22px;
+      padding: 24px;
+      border-radius: 22px;
+      border: 1px solid var(--line-strong);
+      background: #fff;
+    }
+
+    .results-panel h4 {
+      margin: 0 0 10px;
+      font-size: 1.35rem;
+    }
+
+    .results-panel p {
+      margin: 0 0 10px;
+      font-size: 1.04rem;
+      color: var(--muted);
+    }
+
+    .results-panel p:last-child {
+      margin-bottom: 0;
+    }
+
+    .score-result {
+      margin-top: 18px;
+      padding: 18px;
+      border-radius: 18px;
+      background: #f8f4ee;
+      border: 1px solid var(--line);
+    }
+
+    .score-result strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 1.08rem;
+      color: var(--ink);
+    }
+
+    .summary {
+      padding: 34px 0 6px;
+    }
+
+    .summary h3 {
+      margin: 0 0 16px;
+      font-size: clamp(1.9rem, 2.8vw, 2.6rem);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+      max-width: 20ch;
+    }
+
+    .summary p {
+      margin: 0 0 14px;
+      font-size: 1.12rem;
+      max-width: 72ch;
+    }
+
+    .copyright {
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 0.95rem;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .hero-grid,
+      .score-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .page {
+        width: min(calc(100% - 16px), var(--max-width));
+        margin: 8px auto 24px;
+      }
+
+      .hero,
+      .content {
+        padding-right: 20px;
+        padding-left: 20px;
+      }
+
+      .hero {
+        padding-top: 26px;
+        padding-bottom: 26px;
+      }
+
+      .brand-mark {
+        position: static;
+        width: 82px;
+        margin-bottom: 18px;
+      }
+
+      .sheet {
+        border-radius: 22px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+      }
+
+      .button {
+        width: 100%;
+      }
+
+      h1 {
+        font-size: 2.3rem;
+      }
+
+      .chapter p,
+      .summary p,
+      .lead,
+      .source-line {
+        font-size: 1.04rem;
+      }
+
+      .table-wrap {
+        overflow: visible;
+        border: 0;
+        background: transparent;
+      }
+
+      table,
+      tbody,
+      tr,
+      td {
+        display: block;
+        width: 100%;
+      }
+
+      table {
+        min-width: 0;
+      }
+
+      thead {
+        display: none;
+      }
+
+      tbody {
+        display: grid;
+        gap: 14px;
+      }
+
+      tr {
+        padding: 18px 16px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: #fff;
+      }
+
+      td {
+        padding: 0;
+        border-bottom: 0;
+        text-align: left;
+      }
+
+      td:first-child {
+        width: 100%;
+        margin-bottom: 14px;
+        font-size: 1rem;
+        font-weight: 700;
+      }
+
+      td.score {
+        display: inline-block;
+        width: 25%;
+        padding: 0 0 12px;
+        vertical-align: top;
+      }
+
+      td.score::before {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 800;
+      }
+
+      td.score:nth-of-type(2)::before {
+        content: "1";
+      }
+
+      td.score:nth-of-type(3)::before {
+        content: "2";
+      }
+
+      td.score:nth-of-type(4)::before {
+        content: "3";
+      }
+
+      td.score:nth-of-type(5)::before {
+        content: "4";
+      }
+
+      td:last-child {
+        width: 100%;
+        margin-top: 8px;
+        padding-top: 12px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="sheet">
+      <header class="hero">
+        <a class="brand-mark" href="#guide" aria-label="ScaleUp">
+          <img src="./לוגו.jpeg" alt="ScaleUp logo">
+        </a>
+        <div class="kicker">Practical business readiness questionnaire</div>
+        <div class="hero-grid">
+          <div>
+            <h1>Are You Ready to Scale, or About to Break?</h1>
+            <p class="subhead">A structured reality check for business owners who want growth without chaos, dependency, or hidden operational cracks.</p>
+            <p class="source-line">This questionnaire is designed to help business owners assess whether the business is truly ready for the next stage of growth. It is not a motivational exercise. It is a structured reality check.</p>
+            <p class="lead">Use it to evaluate clarity, revenue resilience, operations, control, and leadership capacity before the next push for growth. Rate what is true today, not what you hope will become true later.</p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#guide">Start the Questionnaire</a>
+              <a class="button button-secondary" href="https://calendar.app.google/AzuKw1gAPDkuSijW6" target="_blank" rel="noreferrer">Book a Free Intro Call</a>
+            </div>
+          </div>
+
+          <aside class="author-panel">
+            <div class="portrait">
+              <img src="./אמא.png" alt="Marcela portrait">
+            </div>
+            <h2>Marcela</h2>
+            <p>I help businesses scale by building the right foundations for growth. My focus is on creating the strategy, processes, and business infrastructure that allow companies to grow in a sustainable and organized way. I work closely with business owners to identify growth opportunities, streamline operations, and prepare them for expansion into new markets. For me, scaling is not just about growing faster, but about growing smarter.</p>
+            <div class="author-tags">
+              <span>ScaleUp</span>
+              <span>Business Readiness</span>
+              <span>Strategic Growth</span>
+            </div>
+          </aside>
+        </div>
+      </header>
+
+      <div class="content" id="guide">
+        <section class="intro">
+          <p>Each statement is scored from 1 to 4. The lower your score in a section, the more likely that area is to become the first breaking point under pressure. This makes the questionnaire useful both as a quick diagnostic and as a planning tool.</p>
+          <p style="margin-top: 12px;"><strong>Scoring guide:</strong> 1 is the lowest score and 4 is the highest score.</p>
+          <a class="button button-secondary" href="https://calendar.app.google/AzuKw1gAPDkuSijW6" target="_blank" rel="noreferrer">Book a Free Intro Call</a>
+        </section>
+
+        <section class="chapter">
+          <span class="chapter-label">Section A</span>
+          <h3>Clarity</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>Reality check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>If someone asks what you do, can you explain it in one clear sentence, without rambling or changing the explanation depending on who you're talking to?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q1" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q1" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q1" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q1" value="4"><span class="score-dot"></span></label></td>
+                  <td>If you say "it depends," clarity is probably weak.</td>
+                </tr>
+                <tr>
+                  <td>Are you actively choosing your target client, or mostly taking whoever says yes?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q2" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q2" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q2" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q2" value="4"><span class="score-dot"></span></label></td>
+                  <td>If your clients look completely different from each other, you are probably reacting, not choosing.</td>
+                </tr>
+                <tr>
+                  <td>Is your offer consistent, or are you customizing every proposal from scratch?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q3" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q3" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q3" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q3" value="4"><span class="score-dot"></span></label></td>
+                  <td>If every deal starts from a blank page, scaling will be harder.</td>
+                </tr>
+                <tr>
+                  <td>In the last 6 months, have you stayed focused, or changed direction several times?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q4" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q4" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q4" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q4" value="4"><span class="score-dot"></span></label></td>
+                  <td>Frequent shifts usually signal pressure, not strategy.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="chapter">
+          <span class="chapter-label">Section B</span>
+          <h3>Clients &amp; Revenue</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>Reality check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>If one major client leaves tomorrow, does the business remain stable?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q5" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q5" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q5" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q5" value="4"><span class="score-dot"></span></label></td>
+                  <td>If one client can shake the business, there is too much dependency.</td>
+                </tr>
+                <tr>
+                  <td>Do you know which clients are actually profitable after time, complexity, and effort are factored in?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q6" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q6" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q6" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q6" value="4"><span class="score-dot"></span></label></td>
+                  <td>Revenue alone does not tell the real story.</td>
+                </tr>
+                <tr>
+                  <td>Can you clearly explain where your next 5 clients are likely to come from?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q7" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q7" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q7" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q7" value="4"><span class="score-dot"></span></label></td>
+                  <td>"Word of mouth" is helpful, but it is not a full growth plan.</td>
+                </tr>
+                <tr>
+                  <td>Do you say yes to work you know is not ideal, simply to keep revenue flowing?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q8" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q8" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q8" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q8" value="4"><span class="score-dot"></span></label></td>
+                  <td>That usually points to short-term pressure driving decisions.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="chapter">
+          <span class="chapter-label">Section C</span>
+          <h3>Operations</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>Reality check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>If you step away for a week, does work continue smoothly without you?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q9" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q9" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q9" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q9" value="4"><span class="score-dot"></span></label></td>
+                  <td>If not, you are still acting as the system.</td>
+                </tr>
+                <tr>
+                  <td>Do you have clear, repeatable processes, or does work rely on “how we usually do it”?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q10" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q10" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q10" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q10" value="4"><span class="score-dot"></span></label></td>
+                  <td>If it lives mostly in people’s heads, it is fragile.</td>
+                </tr>
+                <tr>
+                  <td>When demand increases, can the business absorb it without stress and confusion?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q11" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q11" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q11" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q11" value="4"><span class="score-dot"></span></label></td>
+                  <td>Growth should stretch the business, not throw it into chaos.</td>
+                </tr>
+                <tr>
+                  <td>How often are you fixing mistakes, delays, or miscommunication?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q12" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q12" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q12" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q12" value="4"><span class="score-dot"></span></label></td>
+                  <td>Frequent firefighting usually means the process is not under control.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="chapter">
+          <span class="chapter-label">Section D</span>
+          <h3>Structure &amp; Control</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>Reality check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Do you know your margins by project, service, or client, not just top-line revenue?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q13" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q13" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q13" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q13" value="4"><span class="score-dot"></span></label></td>
+                  <td>Revenue is visible. Margins reveal reality.</td>
+                </tr>
+                <tr>
+                  <td>Can you quickly see what is working and what is not, without digging for hours?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q14" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q14" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q14" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q14" value="4"><span class="score-dot"></span></label></td>
+                  <td>If visibility takes too long, decision-making gets weaker.</td>
+                </tr>
+                <tr>
+                  <td>Are important decisions based on clear numbers and evidence, not only intuition and urgency?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q15" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q15" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q15" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q15" value="4"><span class="score-dot"></span></label></td>
+                  <td>Instinct matters, but data gives discipline.</td>
+                </tr>
+                <tr>
+                  <td>When problems emerge, do you see them early or only when they become urgent?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q16" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q16" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q16" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q16" value="4"><span class="score-dot"></span></label></td>
+                  <td>Late visibility is one of the most expensive habits in business.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="chapter">
+          <span class="chapter-label">Section E</span>
+          <h3>Leadership</h3>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Question</th>
+                  <th>1</th>
+                  <th>2</th>
+                  <th>3</th>
+                  <th>4</th>
+                  <th>Reality check</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Do you have regular time to think about the business, not only work inside it?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q17" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q17" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q17" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q17" value="4"><span class="score-dot"></span></label></td>
+                  <td>If all your time goes to execution, direction suffers.</td>
+                </tr>
+                <tr>
+                  <td>Are you involved in most decisions, including small ones?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q18" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q18" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q18" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q18" value="4"><span class="score-dot"></span></label></td>
+                  <td>That often means you have become the bottleneck.</td>
+                </tr>
+                <tr>
+                  <td>Do you feel in control of the business, or does the business feel like it controls you?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q19" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q19" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q19" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q19" value="4"><span class="score-dot"></span></label></td>
+                  <td>This answer usually says more than any metric.</td>
+                </tr>
+                <tr>
+                  <td>Do you have a clear picture of what the next stage should look like?</td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q20" value="1"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q20" value="2"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q20" value="3"><span class="score-dot"></span></label></td>
+                  <td class="score"><label class="score-option"><input type="radio" name="q20" value="4"><span class="score-dot"></span></label></td>
+                  <td>Without that picture, growth becomes random rather than strategic.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="hero-actions">
+            <a class="button button-secondary" href="https://calendar.app.google/AzuKw1gAPDkuSijW6" target="_blank" rel="noreferrer">Book a Free Intro Call</a>
+          </div>
+        </section>
+
+        <section class="callout">
+          <h3>Check Your Score</h3>
+          <p>Select one answer for each of the 20 questions, then click the button below to calculate the score automatically before reviewing the interpretation.</p>
+          <button class="button button-primary" id="check-score" type="button">Check My Score</button>
+          <div class="score-result" id="score-result" hidden>
+            <strong id="score-total"></strong>
+            <p id="score-band"></p>
+            <p id="score-lowest"></p>
+          </div>
+        </section>
+
+        <section class="callout">
+          <h3>How to Use This Questionnaire</h3>
+          <p>Rate each statement based on what is true today, not on what you wish were true. Be honest, not optimistic.</p>
+          <ul class="list">
+            <li><strong>1</strong> = Not true at all</li>
+            <li><strong>2</strong> = Rarely true</li>
+            <li><strong>3</strong> = Mostly true</li>
+            <li><strong>4</strong> = Completely true</li>
+          </ul>
+        </section>
+
+        <section class="chapter" id="scoring">
+          <span class="chapter-label">Scoring</span>
+          <h3>Scoring and Interpretation</h3>
+          <p>Total score: add all 20 answers together. Minimum score: 20. Maximum score: 80.</p>
+          <div class="score-grid">
+            <div class="box">
+              <h4>60-80</h4>
+              <p>You’re ready to scale. The foundation is relatively solid. The risk is not growth itself, but scaling without a clear direction.</p>
+            </div>
+            <div class="box">
+              <h4>45-59</h4>
+              <p>You’re growing, but at risk. The business can move forward, but pressure will start exposing weak points.</p>
+            </div>
+            <div class="box">
+              <h4>20-44</h4>
+              <p>You’re not ready to scale. More growth at this stage will likely create more chaos, dependency, and stress.</p>
+            </div>
+          </div>
+          <p style="margin-top: 18px;">Important: look at your lowest-scoring section as well. That is usually where the business will break first under pressure.</p>
+        </section>
+
+        <section class="chapter">
+          <span class="chapter-label">Next Step</span>
+          <h3>What To Do Next</h3>
+          <div class="timeline">
+            <div class="timeline-item">
+              <span>1</span>
+              <p><strong>If you scored high:</strong> Scale deliberately. Don’t just grow faster, grow smarter.</p>
+            </div>
+            <div class="timeline-item">
+              <span>2</span>
+              <p><strong>If you scored mid:</strong> Before pushing growth, fix your weak points. That’s where your risk is.</p>
+            </div>
+            <div class="timeline-item">
+              <span>3</span>
+              <p><strong>If you scored low:</strong> Pause the push for growth. Build structure first, then scale.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="summary">
+          <h3>Scaling does not fix weak foundations, it amplifies them.</h3>
+          <p>Use this questionnaire to identify what needs strengthening before the next push for growth.</p>
+          <a class="button button-secondary" href="https://calendar.app.google/AzuKw1gAPDkuSijW6" target="_blank" rel="noreferrer">Book a Free Intro Call</a>
+          <div class="copyright">
+            ScaleUp Business Consulting · Business readiness questionnaire for strategic growth
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+  <script>
+    (function () {
+      const sections = {
+        Clarity: ["q1", "q2", "q3", "q4"],
+        "Clients & Revenue": ["q5", "q6", "q7", "q8"],
+        Operations: ["q9", "q10", "q11", "q12"],
+        "Structure & Control": ["q13", "q14", "q15", "q16"],
+        Leadership: ["q17", "q18", "q19", "q20"]
+      };
+
+      const button = document.getElementById("check-score");
+      const result = document.getElementById("score-result");
+      const totalEl = document.getElementById("score-total");
+      const bandEl = document.getElementById("score-band");
+      const lowestEl = document.getElementById("score-lowest");
+
+      button.addEventListener("click", function () {
+        const answers = {};
+
+        for (let i = 1; i <= 20; i += 1) {
+          const checked = document.querySelector(`input[name="q${i}"]:checked`);
+          if (!checked) {
+            alert("Please answer all 20 questions before checking the score.");
+            return;
+          }
+          answers[`q${i}`] = Number(checked.value);
+        }
+
+        let total = 0;
+        Object.values(answers).forEach(function (value) {
+          total += value;
+        });
+
+        let bandText = "";
+        if (total >= 60) {
+          bandText = "You’re ready to scale. The foundation is relatively solid. The risk is not growth itself, but scaling without a clear direction.";
+        } else if (total >= 45) {
+          bandText = "You’re growing, but at risk. The business can move forward, but pressure will start exposing weak points.";
+        } else {
+          bandText = "You’re not ready to scale. More growth at this stage will likely create more chaos, dependency, and stress.";
+        }
+
+        let lowestSection = "";
+        let lowestScore = Infinity;
+        Object.entries(sections).forEach(function ([label, names]) {
+          const sectionTotal = names.reduce(function (sum, name) {
+            return sum + answers[name];
+          }, 0);
+          if (sectionTotal < lowestScore) {
+            lowestScore = sectionTotal;
+            lowestSection = label;
+          }
+        });
+
+        totalEl.textContent = `Total score: ${total} / 80`;
+        bandEl.textContent = bandText;
+        lowestEl.textContent = `Lowest-scoring section: ${lowestSection} (${lowestScore} / 16). This is usually the area most likely to break first under pressure.`;
+        result.hidden = false;
+        result.scrollIntoView({ behavior: "smooth", block: "nearest" });
+      });
+    }());
+  </script>
+</body>
+</html>
